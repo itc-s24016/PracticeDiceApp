@@ -13,6 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.practicediceapp.ui.theme.PracticeDiceAppTheme
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.sp
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PracticeDiceAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    Main(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -31,17 +36,32 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun Main(modifier: Modifier = Modifier) {
+    var dice1 by remember { mutableIntStateOf(0) }
+
+    Column(modifier = modifier.fillMaxSize()) {
+        Text(
+            text = dice1.toString(),
+            fontSize = 24.sp
+        )
+
+        Button(
+            onClick = {
+                dice1 = (1..6).random()
+            },
+            ){
+            Text(
+                text = "サイコロをふる",
+                fontSize = 24.sp
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainPreview() {
     PracticeDiceAppTheme {
-        Greeting("Android")
+        Main()
     }
 }
