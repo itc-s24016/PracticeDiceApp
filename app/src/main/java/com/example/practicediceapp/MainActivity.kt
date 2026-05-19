@@ -64,7 +64,7 @@ fun Main(modifier: Modifier = Modifier) {
 
         Button(
             onClick = {
-                dice1 = (1..5).random()
+                dice1 = (0..5).random()
             },
             ){
             Text(
