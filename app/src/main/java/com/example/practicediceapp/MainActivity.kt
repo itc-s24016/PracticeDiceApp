@@ -24,6 +24,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +65,7 @@ fun Main(modifier: Modifier = Modifier) {
     }
 
     Column(modifier = modifier.fillMaxSize()) {
+        Spacer(modifier = Modifier.height(16.dp))
         Row {
             Image(
                 painter = painterResource(id = diceImages[dice1]),
@@ -76,12 +83,17 @@ fun Main(modifier: Modifier = Modifier) {
                         modifier = Modifier.weight(1f)
             )
         }
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
             text = message,
             fontSize = 24.sp
         )
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
                 dice1 = (0..5).random()
                 dice2 = (0..5).random()
