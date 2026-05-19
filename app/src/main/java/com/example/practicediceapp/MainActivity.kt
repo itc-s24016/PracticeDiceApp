@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.layout.Row
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +41,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Main(modifier: Modifier = Modifier) {
     var dice1 by remember { mutableIntStateOf(0) }
+    var dice2 by remember { mutableIntStateOf(1) }
+    var dice3 by remember { mutableIntStateOf(2) }
 
     val diceImages = remember {
         listOf(
@@ -53,10 +56,23 @@ fun Main(modifier: Modifier = Modifier) {
     }
 
     Column(modifier = modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = diceImages[dice1]),
-            contentDescription = "サイコロ１"
-        )
+        Row {
+            Image(
+                painter = painterResource(id = diceImages[dice1]),
+                contentDescription = "サイコロ１",
+                        modifier = Modifier.weight(1f)
+            )
+            Image(
+                painter = painterResource(id = diceImages[dice2]),
+                contentDescription = "サイコロ２",
+                        modifier = Modifier.weight(1f)
+            )
+            Image(
+                painter = painterResource(id = diceImages[dice3]),
+                contentDescription = "サイコロ３",
+                        modifier = Modifier.weight(1f)
+            )
+        }
         Text(
             text = (dice1 + 1).toString(),
             fontSize = 24.sp
@@ -65,6 +81,8 @@ fun Main(modifier: Modifier = Modifier) {
         Button(
             onClick = {
                 dice1 = (0..5).random()
+                dice2 = (0..5).random()
+                dice3 = (0..5).random()
             },
             ){
             Text(
