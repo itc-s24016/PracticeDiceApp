@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.mutableStateOf
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +44,8 @@ fun Main(modifier: Modifier = Modifier) {
     var dice1 by remember { mutableIntStateOf(0) }
     var dice2 by remember { mutableIntStateOf(1) }
     var dice3 by remember { mutableIntStateOf(2) }
+
+    var message by remember { mutableStateOf("") }
 
     val diceImages = remember {
         listOf(
@@ -74,7 +77,7 @@ fun Main(modifier: Modifier = Modifier) {
             )
         }
         Text(
-            text = (dice1 + 1).toString(),
+            text = message,
             fontSize = 24.sp
         )
 
@@ -83,6 +86,11 @@ fun Main(modifier: Modifier = Modifier) {
                 dice1 = (0..5).random()
                 dice2 = (0..5).random()
                 dice3 = (0..5).random()
+
+                val sum = dice1 + dice2 + dice3 + 3
+                val zoro = dice1 == dice2 && dice2 == dice3
+                val zoroMessage = if (zoro) "ゾロ目" else ""
+                message = "合計：$sum $zoroMessage"
             },
             ){
             Text(
