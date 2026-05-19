@@ -20,6 +20,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,9 +41,24 @@ class MainActivity : ComponentActivity() {
 fun Main(modifier: Modifier = Modifier) {
     var dice1 by remember { mutableIntStateOf(0) }
 
+    val diceImages = remember {
+        listOf(
+            R.drawable.dice1,
+            R.drawable.dice2,
+            R.drawable.dice3,
+            R.drawable.dice4,
+            R.drawable.dice5,
+            R.drawable.dice6
+        )
+    }
+
     Column(modifier = modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(id = diceImages[dice1]),
+            contentDescription = "サイコロ１"
+        )
         Text(
-            text = dice1.toString(),
+            text = (dice1 + 1).toString(),
             fontSize = 24.sp
         )
 
