@@ -30,6 +30,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.LaunchedEffect
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +55,8 @@ fun Main(modifier: Modifier = Modifier) {
 
     var message by remember { mutableStateOf("") }
 
+    var isRolling by remember { mutableStateOf(false) }
+
     val diceImages = remember {
         listOf(
             R.drawable.dice1,
@@ -62,6 +66,24 @@ fun Main(modifier: Modifier = Modifier) {
             R.drawable.dice5,
             R.drawable.dice6
         )
+    }
+
+    LaunchedEffect(isRolling) {
+        if (isRolling) {
+            repeat(10) {
+                dice1 = (0..5).random()
+                dice2 = (0..5).random()
+                dice3 = (0..5).random()
+                delay(50)
+            }
+
+            val sum = dice1 + dice2 + dice3 + 3
+            val zoro = dice1 == dice2 && dice2 == dice3
+            val zoroMessage = if (zoro) "ゾロ目" else ""
+            message = "合計：$sum $zoroMessage"
+
+            isRolling = false
+        }
     }
 
     Column(modifier = modifier.fillMaxSize()) {
@@ -87,22 +109,16 @@ fun Main(modifier: Modifier = Modifier) {
         Text(
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
-            text = message,
+            text = if (isRolling) "Rolling..." else message,
             fontSize = 24.sp
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
+            enabled = !isRolling,
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
-                dice1 = (0..5).random()
-                dice2 = (0..5).random()
-                dice3 = (0..5).random()
-
-                val sum = dice1 + dice2 + dice3 + 3
-                val zoro = dice1 == dice2 && dice2 == dice3
-                val zoroMessage = if (zoro) "ゾロ目" else ""
-                message = "合計：$sum $zoroMessage"
+                isRolling = true
             },
             ){
             Text(
